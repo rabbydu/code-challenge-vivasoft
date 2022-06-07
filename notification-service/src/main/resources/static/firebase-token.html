@@ -1,0 +1,60 @@
+<html>
+
+<head>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+
+<body>
+
+    <p1 id="token">hello world</p1>
+
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-messaging.js"></script>
+
+    <script>
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAeMyG_NC8Xaay-YzyIPVJbFGrd0BdZcPU",
+            authDomain: "notification-service-7b6a3.firebaseapp.com",
+            projectId: "notification-service-7b6a3",
+            storageBucket: "notification-service-7b6a3.appspot.com",
+            messagingSenderId: "57256990423",
+            appId: "1:57256990423:web:c49987eadc5a73ec2ec292",
+            measurementId: "G-C92MRS6T2Z"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        const messaging = firebase.messaging();
+
+        function IntitalizeFireBaseMessaging() {
+            messaging
+                .getToken()
+                // .then(function () {
+                //     console.log("Notification Permission");
+                //     return messaging.getToken();
+                // })
+                .then(function (token) {
+                    console.log("Token : " + token);
+                    document.getElementById("token").innerHTML = token;
+                })
+                .catch(function (reason) {
+                    console.log(reason);
+                });
+        }
+
+        messaging.onMessage((payload) => {
+            console.log('Message received. ', payload);
+            // ...
+        });
+
+        IntitalizeFireBaseMessaging();
+
+    </script>
+</body>
+
+</html>

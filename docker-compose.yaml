@@ -1,0 +1,151 @@
+version: '3.7'
+
+services:
+
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass 123456
+    networks:
+      - ride-newtork
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+    networks:
+      - ride-newtork
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - ride-newtork
+
+  config-server:
+    image: rabbydu/config-server:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    depends_on:
+      - kafka
+      - redis
+    ports:
+      - "8888:8888"
+    environment:
+      SPRING.KAFKA.BOOTSTRAP-SERVERS: kafka:9092
+    networks:
+      - ride-newtork
+
+  naming-server:
+    image: rabbydu/naming-server:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    depends_on:
+      - kafka
+      - config-server
+      - redis
+    ports:
+      - "8761:8761"
+    environment:
+      SPRING.CONFIG.IMPORT: optional:configserver:http://config-server:8888
+    networks:
+      - ride-newtork
+
+  api-gateway:
+    image: rabbydu/api-gateway:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    depends_on:
+      - kafka
+      - naming-server
+      - redis
+    ports:
+      - "8765:8765"
+    environment:
+      SPRING.KAFKA.BOOTSTRAP-SERVERS: kafka:9092
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.CONFIG.IMPORT: optional:configserver:http://config-server:8888
+    networks:
+      - ride-newtork
+
+  ride-service:
+    image: rabbydu/ride-service:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    depends_on:
+      - kafka
+      - naming-server
+      - redis
+    ports:
+      - "8000:8000"
+    environment:
+      SPRING.KAFKA.BOOTSTRAP-SERVERS: kafka:9092
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.CONFIG.IMPORT: optional:configserver:http://config-server:8888
+      SPRING.REDIS.HOST: redis
+    networks:
+      - ride-newtork
+
+  customer-service:
+    image: rabbydu/customer-service:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    depends_on:
+      - kafka
+      - naming-server
+      - redis
+    ports:
+      - "8100:8100"
+    environment:
+      SPRING.KAFKA.BOOTSTRAP-SERVERS: kafka:9092
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.CONFIG.IMPORT: optional:configserver:http://config-server:8888
+      SPRING.REDIS.HOST: redis
+    networks:
+      - ride-newtork
+
+  driver-service:
+    image: rabbydu/driver-service:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    depends_on:
+      - kafka
+      - naming-server
+      - redis
+    ports:
+      - "8200:8200"
+    environment:
+      SPRING.KAFKA.BOOTSTRAP-SERVERS: kafka:9092
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.CONFIG.IMPORT: optional:configserver:http://config-server:8888
+      SPRING.REDIS.HOST: redis
+    networks:
+      - ride-newtork
+
+  notification-service:
+    image: rabbydu/notification-service:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    depends_on:
+      - kafka
+      - naming-server
+      - redis
+    ports:
+      - "7000:7000"
+    environment:
+      SPRING.KAFKA.BOOTSTRAP-SERVERS: kafka:9092
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.CONFIG.IMPORT: optional:configserver:http://config-server:8888
+    networks:
+      - ride-newtork
+
+networks:
+  ride-newtork:
+  

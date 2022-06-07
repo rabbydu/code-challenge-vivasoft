@@ -1,0 +1,39 @@
+=================== ride service =====================
+1.
+endpoint: /ride-service/update-user-info
+data:
+{
+	"id": <id>,
+	"type": "driver" or "customer"
+	"firebaseToken": <token>
+}
+
+2.
+endpoint: /ride-service/ping-route
+data:
+{
+	"id": <id>
+	"type": "driver" or "customer"
+	"routeId": <route-id>,
+}
+
+3.
+endpoint: /ride-service/customer/request-ride/{customerId}
+
+4.
+endpoint: /ride-service/customer/accept-ride
+data:
+{
+	"customerId": <customer-id>
+	"driverId": <customer-id>
+}
+
+=================== Customer ===========================
+
+endpoint: /customer-service/request-ride/{customerId}
+
+==================== Driver ===========================
+
+endpoint: /ride-service/driver/available-drivers/{routeId}
+
+endpoint: /ride-service/driver/accept-ride/{routeId}/{customerId}
