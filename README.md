@@ -9,9 +9,9 @@
 - Ride Service: 8000, 8001, 8002, ...
 - Customer Service: 8100, 8101, 8102, ...
 
-| Attempt | #1  | #2  |
-| :-----: | :-: | :-: |
-| Seconds | 301 | 283 |
+| Application | Port  |
+| :-----: | :-: |
+| Cloud Config Server | 8888 |
 
 ## URLs
 
