@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,10 @@ import com.rabbydu.customerservice.util.JsonFormatter;
 import com.rabbydu.customerservice.util.RedisUtil;
 
 @Service
+@RefreshScope
 public class CustomerService {
 
 	private static Logger logger = LoggerFactory.getLogger(CustomerService.class);
-
-	@Value("${spring.kafka.topic-name.notification}")
-	private String notificationTopic;
 
 	@Autowired
 	private RedisUtil redisUtil;
@@ -34,6 +33,15 @@ public class CustomerService {
 
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
+
+	@Value("${message.ride.request.send.success}")
+	private String rideRequestSuccessMessage;
+
+	@Value("${message.ride.request.customer.unavailable}")
+	private String customerUnavailableMessage;
+
+	@Value("${message.ride.request.driver.unavailable}")
+	private String driverUnavailable;
 
 	public BaseResponseDTO requestForRide(String customerId) {
 
@@ -48,7 +56,7 @@ public class CustomerService {
 
 			if (customerDTO == null) {
 				response.setSuccess(false);
-				response.setMessage("Customer is not available");
+				response.setMessage(customerUnavailableMessage);
 				return response;
 			}
 
@@ -62,7 +70,7 @@ public class CustomerService {
 
 			if (availableDriverList.size() == 0) {
 				response.setSuccess(false);
-				response.setMessage("No driver available in this route");
+				response.setMessage(driverUnavailable);
 				return response;
 			}
 
@@ -80,7 +88,7 @@ public class CustomerService {
 				data.put("type", "request-for-ride");
 				notificationDTO.setData(data);
 				logger.info(JsonFormatter.INSTANCE.toJson(notificationDTO));
-				kafkaTemplate.send(notificationTopic, JsonFormatter.INSTANCE.toJson(notificationDTO));
+				kafkaTemplate.send(Constants.TOPIC_NOTIFICATION, JsonFormatter.INSTANCE.toJson(notificationDTO));
 
 				logger.info(JsonFormatter.INSTANCE.toJson(notificationDTO));
 			});
@@ -88,7 +96,7 @@ public class CustomerService {
 			redisUtil.sadd(Constants.KEY_REQUEST_FOR_RIDE_PREFIX + customerRouteId, customerId);
 
 			response.setSuccess(true);
-			response.setMessage("Ride Request send successfully");
+			response.setMessage(rideRequestSuccessMessage);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage());

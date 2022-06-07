@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -22,18 +23,25 @@ import com.rabbydu.driverservice.util.JsonFormatter;
 import com.rabbydu.driverservice.util.RedisUtil;
 
 @Service
+@RefreshScope
 public class DriverService {
 
 	private Logger logger = LoggerFactory.getLogger(DriverService.class);
-
-	@Value("${spring.kafka.topic-name.notification}")
-	private String notificationTopic;
 
 	@Autowired
 	private RedisUtil redisUtil;
 
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
+
+	@Value("${message.ride.request.accept.success}")
+	private String rideRequestAcceptMessage;
+
+	@Value("${message.ride.request.unavailable}")
+	private String rideRequestUnavailable;
+
+	@Value("${message.ride.request.driver.unavailable}")
+	private String driverUnavailable;
 
 	public BaseResponseDTO acceptRide(AcceptRideRequestDTO dto) {
 
@@ -53,7 +61,7 @@ public class DriverService {
 
 			if (redisUtil.srem(Constants.KEY_REQUEST_FOR_RIDE_PREFIX + customerRouteId, dto.getCustomerId()) == 0) {
 				response.setSuccess(false);
-				response.setMessage("Ride request is not available for the customer");
+				response.setMessage(rideRequestUnavailable);
 				return response;
 			}
 
@@ -63,7 +71,7 @@ public class DriverService {
 			if (!availableDriverList.contains(driverInfo.getId())) {
 				redisUtil.sadd(Constants.KEY_REQUEST_FOR_RIDE_PREFIX + customerRouteId, dto.getCustomerId());
 				response.setSuccess(false);
-				response.setMessage("No driver availabe to server this ride");
+				response.setMessage(driverUnavailable);
 				return response;
 			}
 
@@ -80,7 +88,7 @@ public class DriverService {
 				Map<String, String> data = JsonFormatter.INSTANCE.convertValue(customerInfo, Map.class);
 				data.put("type", "ride-request-already-accepted");
 				notificationDTO.setData(data);
-				kafkaTemplate.send(notificationTopic, JsonFormatter.INSTANCE.toJson(notificationDTO));
+				kafkaTemplate.send(Constants.TOPIC_NOTIFICATION, JsonFormatter.INSTANCE.toJson(notificationDTO));
 
 				logger.info(JsonFormatter.INSTANCE.toJson(notificationDTO));
 
@@ -94,10 +102,10 @@ public class DriverService {
 			Map<String, String> data = JsonFormatter.INSTANCE.convertValue(driverInfo, Map.class);
 			data.put("type", "ride-request-accepted-by-driver");
 			customerNotificationDTO.setData(data);
-			kafkaTemplate.send(notificationTopic, JsonFormatter.INSTANCE.toJson(customerNotificationDTO));
+			kafkaTemplate.send(Constants.TOPIC_NOTIFICATION, JsonFormatter.INSTANCE.toJson(customerNotificationDTO));
 
 			response.setSuccess(true);
-			response.setMessage("Rider request accept successfully");
+			response.setMessage(rideRequestAcceptMessage);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage());

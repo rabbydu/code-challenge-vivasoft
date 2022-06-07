@@ -3,6 +3,8 @@ package com.rabbydu.rideservice.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,7 @@ import com.rabbydu.rideservice.proxy.CustomerServiceProxy;
 import com.rabbydu.rideservice.proxy.DriverServiceProxy;
 import com.rabbydu.rideservice.service.RideService;
 
+@RefreshScope
 @RestController
 @RequestMapping("/ride-serivce")
 public class RideController {
@@ -31,6 +34,12 @@ public class RideController {
 
 	@Autowired
 	private DriverServiceProxy driverProxy;
+	
+	@Value("${message.user.update.success}")
+	private String successMessage;
+	
+	@Value("${message.user.update.failed}")
+	private String failedMessage;
 
 	@PostMapping("/update-user-info")
 	public BaseResponseDTO updateInfo(@RequestBody UserInfoDTO requestBody) {
@@ -40,9 +49,9 @@ public class RideController {
 		boolean result = service.updateInfo(requestBody);
 
 		if (result) {
-			response = new BaseResponseDTO(true, "Successfully updated");
+			response = new BaseResponseDTO(true, successMessage);
 		} else {
-			response = new BaseResponseDTO(false, "Failed to updated");
+			response = new BaseResponseDTO(false, failedMessage);
 		}
 
 		return response;
@@ -55,7 +64,7 @@ public class RideController {
 
 		service.pingRoute(requestBody);
 
-		response = new BaseResponseDTO(true, "Successfully updated");
+		response = new BaseResponseDTO(true, successMessage);
 
 		return response;
 	}
