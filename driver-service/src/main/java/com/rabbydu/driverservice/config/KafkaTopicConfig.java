@@ -6,15 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 
+import com.rabbydu.driverservice.util.Constants;
+
 @Configuration
 public class KafkaTopicConfig {
-	
-	@Value("${spring.kafka.topic-name.notification}")
-	private String notificationTopic;
 
 	@Bean
 	public NewTopic notificationTopic() {
-		return TopicBuilder.name(notificationTopic).build();
+		return TopicBuilder.name(Constants.TOPIC_NOTIFICATION).build();
 	}
 
 }

@@ -15,9 +15,6 @@ public class KafkaListenerService {
 
 	private Logger logger = LoggerFactory.getLogger(KafkaListenerService.class);
 
-	@Value("${spring.kafka.topic-name.notification}")
-	private String notificationTopic;
-
 	@Autowired
 	private FirebaseMessagingService messagingService;
 

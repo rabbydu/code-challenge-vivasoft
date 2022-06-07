@@ -138,7 +138,7 @@ services:
       - naming-server
       - redis
     ports:
-      - "7000:7000"
+      - "8300:8300"
     environment:
       SPRING.KAFKA.BOOTSTRAP-SERVERS: kafka:9092
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka

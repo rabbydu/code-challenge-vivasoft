@@ -13,5 +13,7 @@ public class Constants {
 	
 	public static final String KEY_AVAILABLE_DRIVER_PREFIX = "_available_driver_";
 	public static final String KEY_REQUEST_FOR_RIDE_PREFIX = "_request_for_ride_";
+	
+	public static final String TOPIC_NOTIFICATION = "notification-topic";
 
 }
