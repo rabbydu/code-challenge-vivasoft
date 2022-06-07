@@ -2,6 +2,14 @@
 
 Scenario 1: Think you have multiple services with multiple instances and each instance communicates with a server called Config Service for properties config that’s needed to run the applications. Now you face a problem and you need to change properties config but you don’t want to down your services for a single minute. How do you solve this? Remember one thing: you have multiple services with multiple instances that are running individually.
 
+Solution:
+I have used Spring boot Actuator to dynamically update properties file. By clicking the below end point we can update properties dynamically.
+```
+http://localhost:8080/actuator/refresh
+```
+
+But we faced another problem when one microservice has multiple instance then we need to hit 
+
 Scenario 2: Think this application also has a driver and customer app. A customer requested a ride but we have lots of drivers available on that route. Now in our business perspective we want to notify all the drivers and wait for their response. First we take the first request and others automatically notify this order already received by someone.
 
 ## Dependecies
