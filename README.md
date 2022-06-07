@@ -17,7 +17,12 @@
 ## URLs
 
 ### Cloud Config Server
+- http://localhost:8888/naming-service/default
+- http://localhost:8888/api-gateway/default
+- http://localhost:8888/ride-service/default
 - http://localhost:8888/customer-service/default
+- http://localhost:8888/driver-service/default
+- http://localhost:8888/notification-service/default
 
 ### Ride service
 - http://localhost:8000/currency-exchange/from/USD/to/INR
