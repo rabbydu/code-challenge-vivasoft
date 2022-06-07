@@ -1,59 +1,5 @@
 # code-challenge-vivasoft
 
-- [Spring Boot & Spring Cloud Versions](#spring-boot--spring-cloud-versions)
-- [URLs](#urls)
-- [Debugging Guides](#debugging-guides)
-	- [Spring Cloud Config Server - Steps 01 to 08](#spring-cloud-config-server---steps-01-to-08)
-		- [Step 01](#step-01)
-		- [Step 02](#step-02)
-		- [Step 03](#step-03)
-		- [Step 04](#step-04)
-		- [Step 05](#step-05)
-		- [Step 06](#step-06)
-		- [Step 07](#step-07)
-		- [Step 08](#step-08)
-	- [Setting up Currency Conversion and Currency Exchange Microservices]
-		- [Step 10](#step-10)
-		- [Step 11](#step-11)
-		- [Step 12](#step-12)
-		- [Step 13](#step-13)
-		- [Step 14](#step-14)
-		- [Step 15](#step-15)
-		- [Step 16](#step-16)
-		- [Step 17](#step-17)
-	- [Debugging problems with Feign](#debugging-problems-with-feign)
-		- [Step 18](#step-18)
-	- [Eureka - Step 19 to 21](#eureka---step-19-to-21)
-		- [Step 19](#step-19)
-		- [Step 20](#step-20)
-		- [Step 22](#step-22)
-	- [Spring Cloud API Gateway](#spring-cloud-api-gateway---step-22-to-step-25)
-		- [Step 22](#step-22-1)
-		- [Step 23](#step-23)
-		- [Step 24](#step-24)
-		- [Step 25](#step-25)
-	- [Circuit Breaker](#circuit-breaker---26-to-29)
-		- [Step 26 to 29](#step-26-to-29)
-	- [Docker Section - Connect Microservices with Zipkin](#docker-section---connect-microservices-with-zipkin)
-		- [Docker Step 12](#docker-step-12)
-
-## Spring Boot & Spring Cloud Versions
-
-```xml
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.1</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-
-	<properties>
-		<java.version>15</java.version>
-		<spring-cloud.version>2020.0.0</spring-cloud.version>
-	</properties>
-
-```
-
 
 ## URLs
 
