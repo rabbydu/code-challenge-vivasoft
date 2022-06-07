@@ -66,11 +66,11 @@ Note: **docker-compose.yml** file is shared in the repository.
 - http://localhost:8888/notification-service/default
 
 ### Ride service
-- http://localhost:8000/currency-exchange/from/USD/to/INR
-
-### Customer Service
-- http://localhost:8100/currency-conversion/from/USD/to/INR/quantity/10
-- http://localhost:8100/currency-conversion-feign/from/USD/to/INR/quantity/10
+- http://localhost:8765/ride-serivce/update-user-info
+- http://localhost:8765/ride-serivce/ping-route
+- http://localhost:8765/ride-serivce/request-ride
+- http://localhost:8765/ride-serivce/accept-ride
+- http://localhost:8765/ride-serivce/get-all-ride-request/{driver-id}
 
 ### Eureka
 - http://localhost:8761/
