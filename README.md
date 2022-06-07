@@ -31,10 +31,17 @@ To do this we have wirte a **Notification Service application** which will recei
 - Firebase Cloud Messaging(FCM)
 
 ## Build
-To build projects, go to every projcet directory and run below command to create docker image of that project
+To build projects, go to every projcet directory and run below command to create docker image.
 ```
 mvn spring-boot:build-image -DskipTest
 ```
+
+## Run
+After builing docker images of all projects, execute below docker compose commad to run the project. 
+```
+docker-compose up -d
+```
+Note: **docker-compose.yml** file is shared in the repository.
 
 ## Ports
 
