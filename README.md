@@ -77,12 +77,12 @@ Note: **docker-compose.yml** file is shared in the repository.
 - http://localhost:8200/actuator/busrefresh
 - http://localhost:8300/actuator/busrefresh
 
+### Eureka
+- http://localhost:8761/
+
 ### Ride service
 - http://localhost:8765/ride-serivce/update-user-info
 - http://localhost:8765/ride-serivce/ping-route
 - http://localhost:8765/ride-serivce/request-ride
 - http://localhost:8765/ride-serivce/accept-ride
 - http://localhost:8765/ride-serivce/get-all-ride-request/{driver-id}
-
-### Eureka
-- http://localhost:8761/
