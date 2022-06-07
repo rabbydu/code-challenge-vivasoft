@@ -89,7 +89,9 @@ Note: **docker-compose.yml** file is shared in the repository.
 
 ## Test
 
-
+---
+### Step - 01
+---
 
 To test the apis, a postman collection is shared in the repositry. Please run the apis and observe the result.
 ```
