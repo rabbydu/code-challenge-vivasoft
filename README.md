@@ -7,8 +7,7 @@ I have used Spring boot Actuator to dynamically update properties file. By click
 ```
 http://localhost:8080/actuator/refresh
 ```
-
-But we faced another problem when one microservice has multiple instance then we need to hit 
+But we faced another problem when one microservice has multiple instance then we need to hit every instance on there respective ports. We solved this problem by using Spring Cloud bus(kafka) which will broadcast configuration changes to all instance of microservices and they can update their properties respectively.
 
 Scenario 2: Think this application also has a driver and customer app. A customer requested a ride but we have lots of drivers available on that route. Now in our business perspective we want to notify all the drivers and wait for their response. First we take the first request and others automatically notify this order already received by someone.
 
