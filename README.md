@@ -8,6 +8,7 @@ Scenario 2: Think this application also has a driver and customer app. A custome
 - Redis
 - Kafka
 - Firebase Cloud Messaging
+- Git
 
 ## Ports
 
