@@ -1,0 +1,211 @@
+{
+	"info": {
+		"_postman_id": "40756f10-efda-4c4c-91ce-c69379742fe9",
+		"name": "ride-service-apis",
+		"description": "Simple spring cloud project for ride sharing. Here we solved 2 problems. \r\n\r\n1. When a customer send a ride request we need to send notification to all of the available driver on that route.\r\n2. When a driver accept a request we need to send notification to other driver on that route.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Update User Info(Customer)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"customer1@test.com\",\r\n    \"userType\": \"customer\",\r\n    \"firebaseToken\": \"token-id\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8765/ride-serivce/update-user-info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8765",
+					"path": [
+						"ride-serivce",
+						"update-user-info"
+					]
+				},
+				"description": "Customer and driver app will call this api to update required information after login.\r\n\r\nRequest body:\r\n{\r\n    \"id\": \"<userId>\",\r\n    \"userType\": \"customer\" OR \"driver\",\r\n    \"firebaseToken\": \"<firebase token id>\"\r\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Info(Driver)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"driver1@test.com\",\r\n    \"userType\": \"driver\",\r\n    \"firebaseToken\": \"c4Eg-7TTQbzAxau8NP9-Na:APA91bHvWddaI5I5IvI33-JMtT87-Wwx20liWL52GzcBMW23LeG827NsCVLuwqQBWhxq6GcHprwjbGx1nlCyzrfT9jIQoIellr22F0K43YRgYaCa4AYucVB3WPQ9TlJIO90qAEpsh0-A\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8765/ride-serivce/update-user-info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8765",
+					"path": [
+						"ride-serivce",
+						"update-user-info"
+					]
+				},
+				"description": "Customer and driver app will call this api to update required information after login."
+			},
+			"response": []
+		},
+		{
+			"name": "Ping Route(Customer)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"customer1@test.com\",\r\n    \"userType\": \"customer\",\r\n    \"routeId\": \"route-1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8765/ride-serivce/ping-route",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8765",
+					"path": [
+						"ride-serivce",
+						"ping-route"
+					]
+				},
+				"description": "Customer and driver will call this api periodically(eg: 4second interval) to update their route location.\r\n\r\nRequest body:\r\n{\r\n    \"id\": \"<user-id>\",\r\n    \"userType\": \"customer\" or \"driver\",\r\n    \"routeId\": \"<route-id>\"\r\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Ping Route(Driver)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"driver1@test.com\",\r\n    \"userType\": \"driver\",\r\n    \"routeId\": \"route-1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8765/ride-serivce/ping-route",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8765",
+					"path": [
+						"ride-serivce",
+						"ping-route"
+					]
+				},
+				"description": "Customer and driver will call this api periodically(eg: 4second interval) to update their route location.\r\n\r\nRequest body:\r\n{\r\n    \"id\": \"<user-id>\",\r\n    \"userType\": \"customer\" or \"driver\",\r\n    \"routeId\": \"<route-id>\"\r\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Request for ride",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\": \"customer1@test.com\",\r\n    \"routeId\": \"route-1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8765/ride-serivce/request-ride",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8765",
+					"path": [
+						"ride-serivce",
+						"request-ride"
+					]
+				},
+				"description": "Customer will call this api to request for a ride and driver available on that will get a notifiation about the ride request."
+			},
+			"response": []
+		},
+		{
+			"name": "Accept Ride Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\": \"customer1@test.com\",\r\n    \"driverId\": \"driver1@test.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8765/ride-serivce/accept-ride",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8765",
+					"path": [
+						"ride-serivce",
+						"accept-ride"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Ride Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8765/ride-serivce/get-all-ride-request/driver1@test.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8765",
+					"path": [
+						"ride-serivce",
+						"get-all-ride-request",
+						"driver1@test.com"
+					]
+				},
+				"description": "Get all ride request of a driver"
+			},
+			"response": []
+		}
+	]
+}
