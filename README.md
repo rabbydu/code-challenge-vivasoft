@@ -1,11 +1,17 @@
 # code-challenge-vivasoft
 
+
+
 ## Ports
-- Cloud Config Server: ####8888
+- Cloud Config Server: 8888
 - Eureka Naming Server: 8761
 - Api Gateway: 8765
 - Ride Service: 8000, 8001, 8002, ...
 - Customer Service: 8100, 8101, 8102, ...
+
+| Attempt | #1  | #2  |
+| :-----: | :-: | :-: |
+| Seconds | 301 | 283 |
 
 ## URLs
 
