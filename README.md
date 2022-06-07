@@ -16,10 +16,15 @@ http://localhost:8000/actuator/busrefresh
 ### Scenario 2: 
 Think this application also has a driver and customer app. A customer requested a ride but we have lots of drivers available on that route. Now in our business perspective we want to notify all the drivers and wait for their response. First we take the first request and others automatically notify this order already received by someone.
 
+#### Solution:
+I have used Firebase Cloud Messaging(FCM) to broadcast message to every clients. When a client(customer/driver) open there app, then will connect to FCM and collect token. Then by calling a backend api, the token will store into database so that server can send notification when an incident happen. In our case, when a customer send a ride request, first our server find the available drivers from storage, then send notification message to all drivers by using firebase token. Similarly when a driver accept a ride request, a notifcation will be send to other customer by using firebase token.
+
+To do this we have wirte a Notification Service application which will receive notification request through message queue(kafka) and send to the notification to client using FCM.
+
 ## Dependecies
 - Redis
 - Kafka
-- Firebase Cloud Messaging
+- Firebase Cloud Messaging(FCM)
 - Git
 
 ## Ports
