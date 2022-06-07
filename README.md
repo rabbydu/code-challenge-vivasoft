@@ -87,6 +87,12 @@ Note: **docker-compose.yml** file is shared in the repository.
 - http://localhost:8765/ride-serivce/accept-ride
 - http://localhost:8765/ride-serivce/get-all-ride-request/{driver-id}
 
+## Get Firebase Token
+Click on the below url to get the token. If you are not getting the token then please allow notification from browser of this url.
+```
+https://bkash-dashboard.revechat.com/firebase-token/
+```
+
 ## Test
 
 ### Step - 01
