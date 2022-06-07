@@ -116,7 +116,7 @@ http://localhost:8765/ride-serivce/request-ride
 ### Step - 04
 Then driver will call below api to accept ride request and system will send notification to other drivers.
 ```
-- http://localhost:8765/ride-serivce/accept-ride
+http://localhost:8765/ride-serivce/accept-ride
 ```
 
 ## Postman Collection
