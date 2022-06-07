@@ -69,6 +69,14 @@ Note: **docker-compose.yml** file is shared in the repository.
 - http://localhost:8888/driver-service/default
 - http://localhost:8888/notification-service/default
 
+### Refresh Configuration
+- http://localhost:8761/actuator/busrefresh
+- http://localhost:8765/actuator/busrefresh
+- http://localhost:8000/actuator/busrefresh
+- http://localhost:8100/actuator/busrefresh
+- http://localhost:8200/actuator/busrefresh
+- http://localhost:8300/actuator/busrefresh
+
 ### Ride service
 - http://localhost:8765/ride-serivce/update-user-info
 - http://localhost:8765/ride-serivce/ping-route
