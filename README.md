@@ -37,7 +37,7 @@ mvn spring-boot:build-image -DskipTest
 ```
 
 ## Run
-After builing docker images of all projects, execute below docker compose commad to run the project. 
+After builing docker images of all projects, go to the directory where *docker-compose.yml* file exists and execute below commad to run the project. 
 ```
 docker-compose up -d
 ```
