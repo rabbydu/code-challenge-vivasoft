@@ -1,7 +1,7 @@
 # code-challenge-vivasoft
 
 ## Ports
-
+- Cloud Config Server: 8888
 
 ## URLs
 
