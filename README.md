@@ -37,7 +37,7 @@ To do this we have wirte a **Notification Service application** which will recei
 ## Build
 To build projects, go to every projcet directory and run below command to create docker image.
 ```
-mvn spring-boot:build-image -DskipTest
+mvn spring-boot:build-image -DskipTests
 ```
 
 ## Run
