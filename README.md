@@ -1,6 +1,9 @@
 # code-challenge-vivasoft
 
-
+## Dependecies
+- Redis
+- Kafka
+- Firebase Cloud Messaging
 
 ## Ports
 
