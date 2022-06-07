@@ -24,10 +24,17 @@ To do this we have wirte a **Notification Service application** which will recei
 ## Dependecies
 - Java 1.8
 - Maven
+- Docker
 - Redis
 - Kafka
 - Git
 - Firebase Cloud Messaging(FCM)
+
+## Build
+To build projects, go to every projcet directory and run below command to create docker image of that project
+```
+mvn spring-boot:build-image -DskipTest
+```
 
 ## Ports
 
