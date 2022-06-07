@@ -22,6 +22,8 @@ I have used Firebase Cloud Messaging(FCM) to broadcast message to every clients.
 To do this we have wirte a **Notification Service application** which will receive notification request through message queue(kafka) and send the notification to the client using FCM.
 
 ## Dependecies
+- Java 1.8
+- Maven
 - Redis
 - Kafka
 - Firebase Cloud Messaging(FCM)
