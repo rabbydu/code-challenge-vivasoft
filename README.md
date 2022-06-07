@@ -26,8 +26,8 @@ To do this we have wirte a **Notification Service application** which will recei
 - Maven
 - Redis
 - Kafka
-- Firebase Cloud Messaging(FCM)
 - Git
+- Firebase Cloud Messaging(FCM)
 
 ## Ports
 
