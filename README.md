@@ -89,11 +89,32 @@ Note: **docker-compose.yml** file is shared in the repository.
 
 ## Test
 
----
 ### Step - 01
----
+Customer and driver will call below api to update firebase token.
+```
+http://localhost:8765/ride-serivce/update-user-info
+```
 
-To test the apis, a postman collection is shared in the repositry. Please run the apis and observe the result.
+### Step - 02
+Both customer and driver will call below api periodically(eg: 5 second interval) to update their current route location
+```
+http://localhost:8765/ride-serivce/ping-route
+```
+
+### Step - 03
+Customer will call below api to request for a ride and system will send notification to all available driver on that route
+```
+http://localhost:8765/ride-serivce/request-ride
+```
+
+### Step - 04
+Then driver will call below api to accept ride request and system will send notification to other drivers.
+```
+- http://localhost:8765/ride-serivce/accept-ride
+```
+
+## Postman Collection
+To test the apis, a postman collection is shared in the repositry. Please run the apis on postman and observe the result.
 ```
 ride-service-apis.postman_collection.json
 ```
