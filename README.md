@@ -3,11 +3,6 @@
 
 
 ## Ports
-- Cloud Config Server: 8888
-- Eureka Naming Server: 8761
-- Api Gateway: 8765
-- Ride Service: 8000, 8001, 8002, ...
-- Customer Service: 8100, 8101, 8102, ...
 
 | Application | Port  |
 | :-----: | :-: |
@@ -16,6 +11,8 @@
 | Api Gateway | 8765 |
 | Ride Service | 8000, 8001, 8002, ... |
 | Customer Service | 8100, 8101, 8102, ... |
+| Driver Service | 8200, 8201, 8202, ... |
+| Notificatoin Service | 8300, 8301, 8302, ... |
 
 ## URLs
 
