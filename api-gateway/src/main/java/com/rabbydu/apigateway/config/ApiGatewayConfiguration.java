@@ -13,6 +13,7 @@ public class ApiGatewayConfiguration {
 
 		return builder.routes()
 				.route(p -> p.path("/ride-serivce/**").uri("lb://ride-service"))
+				.route(p -> p.path("/websocket/**").uri("lb://notification-service"))
 				.build();
 	}
 }
