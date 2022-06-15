@@ -76,21 +76,25 @@ public class CustomerService {
 
 			// send ride request notification to all driver
 			availableDriverList.forEach(driverId -> {
+				
+				logger.info(driverId);
 
 				UserInfoDTO dto = JsonFormatter.INSTANCE.fromJson(redisUtil.hget(Constants.KEY_ALL_DRIVER, driverId),
 						UserInfoDTO.class);
+				
+				if(dto != null) {
+					NotificationDTO notificationDTO = new NotificationDTO();
+					notificationDTO.setSubject("Ride Request");
+					notificationDTO.setContent("Ride Request sent from customer");
+					notificationDTO.setToken(dto.getId());
+					Map<String, String> data = JsonFormatter.INSTANCE.convertValue(customerDTO, Map.class);
+					data.put("type", "request-for-ride");
+					notificationDTO.setData(data);
+					logger.info(JsonFormatter.INSTANCE.toJson(notificationDTO));
+					kafkaTemplate.send(Constants.TOPIC_NOTIFICATION, JsonFormatter.INSTANCE.toJson(notificationDTO));
 
-				NotificationDTO notificationDTO = new NotificationDTO();
-				notificationDTO.setSubject("Ride Request");
-				notificationDTO.setContent("Ride Request sent from customer");
-				notificationDTO.setToken(dto.getFirebaseToken());
-				Map<String, String> data = JsonFormatter.INSTANCE.convertValue(customerDTO, Map.class);
-				data.put("type", "request-for-ride");
-				notificationDTO.setData(data);
-				logger.info(JsonFormatter.INSTANCE.toJson(notificationDTO));
-				kafkaTemplate.send(Constants.TOPIC_NOTIFICATION, JsonFormatter.INSTANCE.toJson(notificationDTO));
-
-				logger.info(JsonFormatter.INSTANCE.toJson(notificationDTO));
+					logger.info(JsonFormatter.INSTANCE.toJson(notificationDTO));
+				}
 			});
 
 			redisUtil.sadd(Constants.KEY_REQUEST_FOR_RIDE_PREFIX + customerRouteId, customerId);

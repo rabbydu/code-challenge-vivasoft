@@ -80,17 +80,19 @@ public class DriverService {
 
 				UserInfoDTO driverDTO = JsonFormatter.INSTANCE
 						.fromJson(redisUtil.hget(Constants.KEY_ALL_DRIVER, driverId), UserInfoDTO.class);
+				
+				if(driverDTO != null) {
+					NotificationDTO notificationDTO = new NotificationDTO();
+					notificationDTO.setSubject("Ride Request");
+					notificationDTO.setContent("Ride Request already accepted by other driver");
+					notificationDTO.setToken(driverDTO.getId());
+					Map<String, String> data = JsonFormatter.INSTANCE.convertValue(customerInfo, Map.class);
+					data.put("type", "ride-request-already-accepted");
+					notificationDTO.setData(data);
+					kafkaTemplate.send(Constants.TOPIC_NOTIFICATION, JsonFormatter.INSTANCE.toJson(notificationDTO));
 
-				NotificationDTO notificationDTO = new NotificationDTO();
-				notificationDTO.setSubject("Ride Request");
-				notificationDTO.setContent("Ride Request already accepted by other driver");
-				notificationDTO.setToken(driverDTO.getFirebaseToken());
-				Map<String, String> data = JsonFormatter.INSTANCE.convertValue(customerInfo, Map.class);
-				data.put("type", "ride-request-already-accepted");
-				notificationDTO.setData(data);
-				kafkaTemplate.send(Constants.TOPIC_NOTIFICATION, JsonFormatter.INSTANCE.toJson(notificationDTO));
-
-				logger.info(JsonFormatter.INSTANCE.toJson(notificationDTO));
+					logger.info(JsonFormatter.INSTANCE.toJson(notificationDTO));	
+				}
 
 			});
 
@@ -121,8 +123,12 @@ public class DriverService {
 		Set<String> availableDriverList = new HashSet<String>();
 
 		try {
+			
+			logger.info(routId);
 
 			availableDriverList = redisUtil.smembers(Constants.KEY_AVAILABLE_DRIVER_PREFIX + routId);
+			
+			logger.info(JsonFormatter.INSTANCE.toJson(availableDriverList));
 
 		} catch (Exception e) {
 			logger.error(e.getMessage());

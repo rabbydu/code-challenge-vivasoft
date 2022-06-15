@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +66,7 @@ public class JsonFormatter {
 
 	public <T> T fromJson(String json, Class<T> clazz) {
 		try {
-			if (!StringUtils.isEmpty(json)) {
+			if (json != null) {
 				return this.objectMapper.readValue(json, clazz);
 			}
 

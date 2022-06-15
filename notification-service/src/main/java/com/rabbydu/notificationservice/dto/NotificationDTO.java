@@ -8,7 +8,6 @@ public class NotificationDTO {
 	private String content;
 	private String token;
 	private Map<String, String> data;
-	private String image;
 
 	public String getToken() {
 		return token;
@@ -40,13 +39,5 @@ public class NotificationDTO {
 
 	public void setData(Map<String, String> data) {
 		this.data = data;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
 	}
 }
