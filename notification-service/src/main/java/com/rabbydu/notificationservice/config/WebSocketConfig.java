@@ -12,7 +12,17 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
-		config.enableSimpleBroker("/topic/");
+		
+		// rabbitmq stomp broker plugin. Rabbitmq required
+		config.enableStompBrokerRelay("/topic")
+			.setRelayHost("localhost")
+			.setRelayPort(61613)
+			.setSystemLogin("guest")
+			.setSystemPasscode("guest");
+
+		// kafka don't have plugin
+//		config.enableSimpleBroker("/topic");
+		
 		config.setApplicationDestinationPrefixes("/app");
 	}
 

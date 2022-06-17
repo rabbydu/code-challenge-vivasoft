@@ -9,13 +9,13 @@
             function setConnected(connected) {
                 document.getElementById('connect').disabled = connected;
                 document.getElementById('disconnect').disabled = !connected;
-                //document.getElementById('conversationDiv').style.visibility 
-                //  = connected ? 'visible' : 'hidden';
+                document.getElementById('conversationDiv').style.visibility 
+                  = connected ? 'visible' : 'hidden';
                 document.getElementById('response').innerHTML = '';
             }
             
             function connect() {
-                var socket = new SockJS('http://localhost:8765/websocket');
+                var socket = new SockJS('http://localhost:8300/websocket');
                 stompClient = Stomp.over(socket);  
                 stompClient.connect({}, function(frame) {
                     setConnected(true);
@@ -23,6 +23,12 @@
 					var from = document.getElementById('from').value;
                     stompClient.subscribe('/topic/notification/' + from, function(messageOutput) {
                         showMessageOutput(JSON.parse(messageOutput.body));
+
+                    });
+					
+					stompClient.subscribe('/topic/outgoing', function(messageOutput) {
+                        showMessageOutput(JSON.parse(messageOutput.body));
+
                     });
                 });
             }
@@ -67,8 +73,8 @@
             </div>
             <br />
             <div id="conversationDiv">
-                <!--<input type="text" id="text" placeholder="Write a message..."/>
-                <button id="sendMessage" onclick="sendMessage();">Send</button>-->
+                <input type="text" id="text" placeholder="Write a message..."/>
+                <button id="sendMessage" onclick="sendMessage();">Send</button>
                 <p id="response"></p>
             </div>
         </div>
